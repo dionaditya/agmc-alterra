@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "8a32f0a2-6279-423b-aaf8-8c9fac99d2be",
+		"name": "Binance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10099924"
+	},
+	"item": [
+		{
+			"name": "BTCUSDT_1_MIN",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ts  = Date.now();",
+							"pm.environment.set(\"timestamp\", ts);",
+							" ",
+							"let paramsObject = {};",
+							" ",
+							"const binance_api_secret = pm.environment.get(\"api_secret\");",
+							" ",
+							"const parameters = pm.request.url.query;",
+							" ",
+							"parameters.map((param) => {",
+							"    if (param.key != 'signature' && ",
+							"        param.key != 'timestamp' && ",
+							"        !is_empty(param.value) &&",
+							"        !is_disabled(param.disabled)) {",
+							"            paramsObject[param.key] = param.value;",
+							"            //console.log(encodeURIComponent(param.value));",
+							"            //pm.environment.set(param.key, encodeURIComponent(param.value));",
+							"    }",
+							"})",
+							"        ",
+							"Object.assign(paramsObject, {'timestamp': ts});",
+							" ",
+							"if (binance_api_secret) {",
+							"    const queryString = Object.keys(paramsObject).map((key) => {",
+							"        return `${key}=${paramsObject[key]}`;",
+							"    }).join('&');",
+							"    console.log(queryString);",
+							"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();",
+							"    pm.environment.set(\"signature\", signature);",
+							"}",
+							" ",
+							" ",
+							"function is_disabled(str) {",
+							"    return str == true;",
+							"}",
+							" ",
+							"function is_empty(str) {",
+							"    if (typeof str == 'undefined' ||",
+							"        !str || ",
+							"        str.length === 0 || ",
+							"        str === \"\" ||",
+							"        !/[^\\s]/.test(str) ||",
+							"        /^\\s*$/.test(str) ||",
+							"        str.replace(/\\s/g,\"\") === \"\")",
+							"    {",
+							"        return true;",
+							"    }",
+							"    else",
+							"    {",
+							"        return false;",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-MBX-APIKEY",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{base_url}}/api/v1/klines?interval=1m&symbol=BTCUSDT",
+					"protocol": "https",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"klines"
+					],
+					"query": [
+						{
+							"key": "interval",
+							"value": "1m"
+						},
+						{
+							"key": "symbol",
+							"value": "BTCUSDT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BTCUSDT_WITH_START_DATE_END_DATE",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ts  = Date.now();",
+							"pm.environment.set(\"timestamp\", ts);",
+							" ",
+							"let paramsObject = {};",
+							" ",
+							"const binance_api_secret = pm.environment.get(\"api_secret\");",
+							" ",
+							"const parameters = pm.request.url.query;",
+							" ",
+							"parameters.map((param) => {",
+							"    if (param.key != 'signature' && ",
+							"        param.key != 'timestamp' && ",
+							"        !is_empty(param.value) &&",
+							"        !is_disabled(param.disabled)) {",
+							"            paramsObject[param.key] = param.value;",
+							"            //console.log(encodeURIComponent(param.value));",
+							"            //pm.environment.set(param.key, encodeURIComponent(param.value));",
+							"    }",
+							"})",
+							"        ",
+							"Object.assign(paramsObject, {'timestamp': ts});",
+							" ",
+							"if (binance_api_secret) {",
+							"    const queryString = Object.keys(paramsObject).map((key) => {",
+							"        return `${key}=${paramsObject[key]}`;",
+							"    }).join('&');",
+							"    console.log(queryString);",
+							"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();",
+							"    pm.environment.set(\"signature\", signature);",
+							"}",
+							" ",
+							" ",
+							"function is_disabled(str) {",
+							"    return str == true;",
+							"}",
+							" ",
+							"function is_empty(str) {",
+							"    if (typeof str == 'undefined' ||",
+							"        !str || ",
+							"        str.length === 0 || ",
+							"        str === \"\" ||",
+							"        !/[^\\s]/.test(str) ||",
+							"        /^\\s*$/.test(str) ||",
+							"        str.replace(/\\s/g,\"\") === \"\")",
+							"    {",
+							"        return true;",
+							"    }",
+							"    else",
+							"    {",
+							"        return false;",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-MBX-APIKEY",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{base_url}}/api/v1/klines?interval=1h&symbol=BTCUSDT&startTime=1662829200000&endTime=1662915600000",
+					"protocol": "https",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"klines"
+					],
+					"query": [
+						{
+							"key": "interval",
+							"value": "1h"
+						},
+						{
+							"key": "symbol",
+							"value": "BTCUSDT"
+						},
+						{
+							"key": "startTime",
+							"value": "1662829200000"
+						},
+						{
+							"key": "endTime",
+							"value": "1662915600000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user account data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ts  = Date.now();",
+							"pm.environment.set(\"timestamp\", ts);",
+							" ",
+							"let paramsObject = {};",
+							" ",
+							"const binance_api_secret = pm.environment.get(\"api_secret\");",
+							"",
+							"console.log(binance_api_secret)",
+							" ",
+							"const parameters = pm.request.url.query;",
+							" ",
+							"parameters.map((param) => {",
+							"    if (param.key != 'signature' && ",
+							"        param.key != 'timestamp' && ",
+							"        !is_empty(param.value) &&",
+							"        !is_disabled(param.disabled)) {",
+							"            paramsObject[param.key] = param.value;",
+							"            //console.log(encodeURIComponent(param.value));",
+							"            //pm.environment.set(param.key, encodeURIComponent(param.value));",
+							"    }",
+							"})",
+							"        ",
+							"Object.assign(paramsObject, {'timestamp': ts});",
+							" ",
+							"if (binance_api_secret) {",
+							"    const queryString = Object.keys(paramsObject).map((key) => {",
+							"        return `${key}=${paramsObject[key]}`;",
+							"    }).join('&');",
+							"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();",
+							"    pm.environment.set(\"signature\", signature);",
+							"}",
+							" ",
+							" ",
+							"function is_disabled(str) {",
+							"    return str == true;",
+							"}",
+							" ",
+							"function is_empty(str) {",
+							"    if (typeof str == 'undefined' ||",
+							"        !str || ",
+							"        str.length === 0 || ",
+							"        str === \"\" ||",
+							"        !/[^\\s]/.test(str) ||",
+							"        /^\\s*$/.test(str) ||",
+							"        str.replace(/\\s/g,\"\") === \"\")",
+							"    {",
+							"        return true;",
+							"    }",
+							"    else",
+							"    {",
+							"        return false;",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-MBX-APIKEY",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{base_url}}/api/v3/account?signature={{signature}}&timestamp={{timestamp}}",
+					"protocol": "https",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v3",
+						"account"
+					],
+					"query": [
+						{
+							"key": "signature",
+							"value": "{{signature}}"
+						},
+						{
+							"key": "timestamp",
+							"value": "{{timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

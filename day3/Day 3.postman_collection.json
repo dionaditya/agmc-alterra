@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "9ef6c726-370a-4414-abf6-96a170f9ac41",
+		"name": "Day 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10099924"
+	},
+	"item": [
+		{
+			"name": "v1/books",
+			"item": [
+				{
+					"name": "{book id}",
+					"item": [
+						{
+							"name": "v1GetBookById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1UpdateBookById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1DeleteBookById",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/books/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"books",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "v1GetBooks Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNjYzNTE4ODM2fQ.Gl_pdFf6ECXM7AdMBGLqDTMESbt3yUlnKcZlazAwYvXzCPof7zc6XYt-L1pAb2I4AP1XH8qwxlDtR3JbpE2DCboMa4Ybu4CYj-kUDaNTiqwY1BEOaC2nZBcVefXu90OwF2EZf8EXJndMtA4yzNDipHazzVThqvaU-F19AA1_d9tuPFI9rz_ZAnjnsbKTH1cWXYD5FWIp9Tw5cTKqIohWi38L7T5g3mTwDyoZsU0ikMgZ869o7MT468TKoVcNxRnblXs7psSQ-ku55j2UHP3csFeG_BIq_L50FGZSUjBHk_s4RTKFMUWtNn1dziplWgSv76PSoCzcz6X9m3GacFrzMt8xJXu2ItMdEALbo_AdvxmDOspvffsf9QUWVNV9GeXlg6U6C8Fugde5GelumhmbBrTcVBvadaUVfxBhCZ4sipfTTLpgrwcZhqQYl_yB7FPG4Esq5I2XWBRukv27OXsvkITHQqiCv6cmaCqHYSd5omGNI_TtVvqzyC8c4_ctj-0j7WhTeG5eU1LVlW-dMXrprgEwMd0Exv2XvcDwtZHvAoxpo-8My_rUaq0kRmNxmW-mTgasdVuPJn5aeZhFWXlD0qvcFN3FBWrPuQ4M5yUBlvGxsG3bM9l1wtOi7Gq-2FrOlIfXUlErwI-SuZz6eacviPYaon3vwkiO9O994kT6x34",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNjY1ODQ0OTQxLCJpYXQiOiIyMDIyLTA5LTE1VDE0OjQyOjIxLjA1MDkyNTA5WiIsIm5hbWUiOiJ0b21teSIsInN1YiI6InV1aWQifQ.QZ6DNsHVdORMngaBCocwCy1_yVRJWrqcAqTrRdgkh2nRQHrZxYB0O7EcAHgKBlKtD2U4bBx-DIlF9CdurV3w_rFKsXip6KXqCY1qeo9-qo0rsYxqHgwuXYJOGCuZCJgRZas8hPHOGscEYeyJgvFVIbLahxXMz9kZcFsdxmIRxE-Porh5XwFW6rbEfk5qZsvPDDvXAQsV3g8uVUhslePjJuUIVtZOanm-s2Yfb2V5AJqjLv2jRV5ew3eF_3llBBv1_-dHGrazJwZsurACbdMdAhHaogoyDn4FLRT1z3qSvclu38wgYrumUGnI4dd4B9VxBcAAVC5LW50RSQItYPx2fwyiI8BPd3OOT4ZCYE1FRrknekbBkS3w2R2Rihj7kFIiW4sFzsWiitzQBrdzVGUwZ6DKdjQOpvS0BvSr17Lt7dFgX18fpOcvRG4KglbQEObP2yLncwWlXnOE8DlrDqUx_HjQsa32TCdbdQYz1FK395QUux0w-SEbQdDQBeJnPs5lVIkMkKdFiGBaZajHU6ahEOkcMLcCQZ5oCpoFsS27-ff7jXj89Xlk2M6AqA82QkLQDHqNpmvbjTDShMBoFPfh_fbs0OfBXoxAeEbIMiuxOz-xY7RCj1Asneuwf3wTVshLSTmi4kxdkXfNk6O5RPYzDcLmukibgTurXhxKnsCFVno",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Name\": \"yaya\",\n    \"Email\": \"dion@gmail.coms\",\n    \"Password\": \"lorem ipsum\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1CreateBook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v1/users",
+			"item": [
+				{
+					"name": "{user id}",
+					"item": [
+						{
+							"name": "v1UpdateUserById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"Name\": \"lorem-ipsum2\",\n    \"Email\": \"loremipsum@gmail.com\",\n    \"Password\": \"****\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "721ebbbf-6e4d-4ec0-a96d-0a3d221603e7"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1DeleteUserById",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "721ebbbf-6e4d-4ec0-a96d-0a3d221603e7"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1GetUserById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "tono@example.com",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:1323/v1/users/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1323",
+									"path": [
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "e32c9a04-1cff-42c9-ab7e-3049fc9ab60d"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "v1GetUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "tono@example.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"lorem-ipsum\",\r\n    \"Email\": \"loremipsum@gmail.com\",\r\n    \"Password\": \"****\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1Singin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNjY1ODQ0OTQxLCJpYXQiOiIyMDIyLTA5LTE1VDE0OjQyOjIxLjA1MDkyNTA5WiIsIm5hbWUiOiJ0b21teSIsInN1YiI6InV1aWQifQ.QZ6DNsHVdORMngaBCocwCy1_yVRJWrqcAqTrRdgkh2nRQHrZxYB0O7EcAHgKBlKtD2U4bBx-DIlF9CdurV3w_rFKsXip6KXqCY1qeo9-qo0rsYxqHgwuXYJOGCuZCJgRZas8hPHOGscEYeyJgvFVIbLahxXMz9kZcFsdxmIRxE-Porh5XwFW6rbEfk5qZsvPDDvXAQsV3g8uVUhslePjJuUIVtZOanm-s2Yfb2V5AJqjLv2jRV5ew3eF_3llBBv1_-dHGrazJwZsurACbdMdAhHaogoyDn4FLRT1z3qSvclu38wgYrumUGnI4dd4B9VxBcAAVC5LW50RSQItYPx2fwyiI8BPd3OOT4ZCYE1FRrknekbBkS3w2R2Rihj7kFIiW4sFzsWiitzQBrdzVGUwZ6DKdjQOpvS0BvSr17Lt7dFgX18fpOcvRG4KglbQEObP2yLncwWlXnOE8DlrDqUx_HjQsa32TCdbdQYz1FK395QUux0w-SEbQdDQBeJnPs5lVIkMkKdFiGBaZajHU6ahEOkcMLcCQZ5oCpoFsS27-ff7jXj89Xlk2M6AqA82QkLQDHqNpmvbjTDShMBoFPfh_fbs0OfBXoxAeEbIMiuxOz-xY7RCj1Asneuwf3wTVshLSTmi4kxdkXfNk6O5RPYzDcLmukibgTurXhxKnsCFVno",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "dion@gmail.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "lorem ipsum",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/signin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
