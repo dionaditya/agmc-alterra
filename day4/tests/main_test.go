@@ -1,11 +1,14 @@
-package main
+package tests
 
 import (
+	"agmc/day2/entity"
 	"agmc/day2/routes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	uuid "github.com/satori/go.uuid"
 	"github.com/steinfletcher/apitest"
 )
 
@@ -78,7 +81,7 @@ gWiizSZiTsHgi8Qlp3OHe8iQscqqRbP5t27TOhcMLSjIx0Y/WJ58aXh5D3m3p/OX
 -----END PUBLIC KEY-----
 `
 
-func TestAddNewUser(t *testing.T) {
+func TestFailedAddNewUser(t *testing.T) {
 	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
 
 	ts := httptest.NewServer(r)
@@ -89,5 +92,250 @@ func TestAddNewUser(t *testing.T) {
 		Post("/v1/users").
 		Expect(t).
 		Status(http.StatusBadRequest).
+		End()
+
+}
+
+var uniqueName = uuid.NewV4()
+
+type UserPayload struct {
+	Status  string
+	Message string
+	Data    entity.User
+}
+
+var userPayload UserPayload
+
+func TestAddNewUser(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	userData := apitest.New().
+		Handler(r).
+		Post("/v1/users").
+		JSON(fmt.Sprintf(`{
+			"Name": "%s",
+			"Email": "%s@gmail.com",
+			"Password": "****"
+		}`, uniqueName, uniqueName)).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	userData.JSON(&userPayload)
+
+}
+
+func TestUserAlreadyExist(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Post("/v1/users").
+		JSON(fmt.Sprintf(`{
+			"Name": "%s",
+			"Email": "%s@gmail.com",
+			"Password": "****"
+		}`, uniqueName, uniqueName)).
+		Expect(t).
+		Status(http.StatusInternalServerError).
+		End()
+
+}
+
+type Token struct {
+	Token string
+}
+
+var result Token
+
+func TestSignIn(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	resp := apitest.New().
+		Handler(r).
+		Post("/v1/signin").
+		FormData("email", fmt.Sprintf("%s@gmail.com", uniqueName)).
+		FormData("password", "****").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	resp.JSON(&result)
+
+}
+
+func TestErrorSignIn(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Post("/v1/signin").
+		FormData("email", fmt.Sprintf("%s@gmail.com", uniqueName)).
+		FormData("password", "******").
+		Expect(t).
+		Status(http.StatusUnauthorized).
+		End()
+
+}
+
+func TestGetUsers(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Get("/v1/users").
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestFailedUnAuthGetUsers(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Get("/v1/users").
+		Header("Authorization", "Bearer value").
+		Expect(t).
+		Status(http.StatusUnauthorized).
+		End()
+}
+
+func TestGetUserById(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Get("/v1/users/"+userPayload.Data.ID.String()).
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestFailedNoRecordFound(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Get("/v1/users/random-id").
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+}
+
+func TestUpdateUser(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Put("/v1/users/"+userPayload.Data.ID.String()).
+		JSON(fmt.Sprintf(`{
+			"Name": "%s updated",
+			"Email": "%s@gmail.com",
+			"Password": "****"
+		}`, uniqueName, uniqueName)).
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestFailedUpdateUser(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Put("/v1/users/"+userPayload.Data.ID.String()).
+		JSON(fmt.Sprintf(`{
+			"Unexist": "%s",
+			"Email": "%s@gmail.com",
+			"Password": "****"
+		}`, uniqueName, uniqueName)).
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}
+
+func TestFailedUpdateUserNoFoundUser(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Put("/v1/users/lorem").
+		JSON(fmt.Sprintf(`{
+			"Name": "%s updated",
+			"Email": "%s@gmail.com",
+			"Password": "****"
+		}`, uniqueName, uniqueName)).
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusInternalServerError).
+		End()
+}
+
+func TestDeleteUser(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Delete("/v1/users/"+userPayload.Data.ID.String()).
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestFailedDeleteUserNoUserFound(t *testing.T) {
+	r := routes.NewRouting().GetRouting([]byte(mockPrivateKey), []byte(mockPublicKey))
+
+	ts := httptest.NewServer(r)
+
+	defer ts.Close()
+	apitest.New().
+		Handler(r).
+		Delete("/v1/users/lorem").
+		Header("Authorization", fmt.Sprintf("Bearer %s", result.Token)).
+		Expect(t).
+		Status(http.StatusInternalServerError).
 		End()
 }

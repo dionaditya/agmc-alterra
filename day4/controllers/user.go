@@ -52,6 +52,8 @@ func (userController *UserController) GetUserByID(c echo.Context) error {
 func (userController *UserController) AddUser(c echo.Context) error {
 	var user = entity.User{}
 	err := c.Bind(&user)
+
+	fmt.Println(err)
 	if err != nil {
 		fmt.Printf("[UserController.AddUser] error bind data %v \n", err)
 		return utils.HandleError(c, http.StatusInternalServerError, "Oppss server someting wrong")
@@ -60,6 +62,9 @@ func (userController *UserController) AddUser(c echo.Context) error {
 		return utils.HandleError(c, http.StatusBadRequest, "field are required")
 	}
 	userData, err := userController.userModel.AddUser(&user)
+
+	fmt.Println(err)
+
 	if err != nil {
 		return utils.HandleError(c, http.StatusInternalServerError, err.Error())
 	}

@@ -51,8 +51,6 @@ func (e *UserModel) AddUser(user *entity.User) (*entity.User, error) {
 
 	user.ID = u2
 
-	fmt.Println(user.Email, user.Name, "test")
-
 	result := e.GetUserByEmail(user.Email)
 
 	if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
@@ -75,6 +73,8 @@ func (e *UserModel) AddUser(user *entity.User) (*entity.User, error) {
 		return nil, fmt.Errorf("failed add new user")
 	}
 
+	user.Password = ""
+
 	return user, nil
 }
 
@@ -93,6 +93,8 @@ func (e *UserModel) UpdateUser(id string, user *entity.User) (*entity.User, erro
 		return nil, fmt.Errorf("Failed to update user with id " + id)
 	}
 
+	userData.Password = ""
+
 	return userData, nil
 }
 
@@ -110,6 +112,8 @@ func (e *UserModel) DeleteUser(id string) error {
 		fmt.Printf("[userModel.AddUser] error execute query %v \n", err)
 		return fmt.Errorf("Failed to delete user with id " + id)
 	}
+
+	userData.Password = ""
 
 	return nil
 }
