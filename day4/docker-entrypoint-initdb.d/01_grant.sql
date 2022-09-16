@@ -1,0 +1,1 @@
+GRANT ALL ON `test_db`.* TO webuser@'%';
