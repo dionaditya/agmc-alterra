@@ -1,6 +1,14 @@
 ## Getting started
 
 ```bash
-docker-compose build
-docker-compose up
+make build
+make run
+```
+
+
+
+## Integration tests
+
+```bash
+make test
 ```
