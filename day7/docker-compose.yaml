@@ -16,6 +16,7 @@ services:
       DB_PORT: '3306'
     networks:
       - backend
+    restart: on-failure
 
   db:
     image: arm64v8/mysql:oracle
