@@ -19,7 +19,7 @@ services:
     restart: on-failure
 
   db:
-    image: arm64v8/mysql:oracle
+    image: mysql:8.0.21
     restart: always
     ports:
       - '3306:3306'
