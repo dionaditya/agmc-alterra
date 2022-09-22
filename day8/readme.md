@@ -34,7 +34,7 @@ https://docs.docker.com/engine/install/ubuntu/
 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04
 
-![Screenshot](docker-installed.png)
+![Screenshot](images/docker-installed.png)
 
 1. Install make
 
@@ -48,7 +48,7 @@ https://linuxhint.com/install-make-ubuntu/
 git clone https://github.com/dionaditya/agmc-alterra
 ```
 
-![Screenshot](docker-installed.png)
+![Screenshot](images/docker-installed.png)
 
 3. run deploy command
 
@@ -58,8 +58,8 @@ make run-prod
 ```
 
 
-![Screenshot](app-running.png)
+![Screenshot](images/app-running.png)
 
 4. test using postman
 
-![Screenshot](postman.png)
+![Screenshot](imgaes/postman.png)
