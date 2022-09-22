@@ -62,4 +62,4 @@ make run-prod
 
 4. test using postman
 
-![Screenshot](imgaes/postman.png)
+![Screenshot](images/postman.png)
