@@ -32,6 +32,8 @@ services:
       MYSQL_PASSWORD: 'webpass'
       MYSQL_ROOT_PASSWORD: 'pass'
       MYSQL_DATABASE: 'test_db'
+    security_opt:
+      - seccomp:unconfined
     networks:
       - backend
       
