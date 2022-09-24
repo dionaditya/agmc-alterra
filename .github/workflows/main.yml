@@ -1,0 +1,55 @@
+name: Push-to-EC2
+
+# Trigger deployment only on push to master branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docker:
+    name: "Build Docker Container"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_PORT: ""
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          directory: day10
+          file_name: .env
+          fail_on_empty: false
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: dionjatingaleh/agmc-day-10
+          tags: v1, latest
+          registry: registry.hub.docker.com
+          dockerfile: day10/Dockerfile
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            sudo docker pull dionjatingaleh/agmc-day-10:latest &&
+            sudo docker container stop user-service || true &&
+            sudo docker container rm user-service || true &&
+            sudo docker container create --name user-service -p 1323:1323 dionjatingaleh/agmc-day-10:latest &&
+            sudo docker container start user-service
+
+
+
