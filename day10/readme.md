@@ -16,3 +16,8 @@ make run
 ```bash
 make test
 ```
+
+$$ CI/CD Deployments
+
+![success pipeline](images/ci.png)
+![success pipeline](images/result.png)
